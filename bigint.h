@@ -14,6 +14,8 @@ int X2(char * acc, int sz);
 
 // add the number from S represented as strings ("12345")
 // to accumulator ('acc')
+// only non-negative numbers are supported
+// size of acc should be big enough to fit the numbers
 void add(std::string& acc, const std::string& s,
 	 int digit = 0, int co = 0);
 

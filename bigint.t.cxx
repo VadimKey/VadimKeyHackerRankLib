@@ -65,8 +65,44 @@ bool testX2(string & reason) {
 
 
 bool testAdd(string & reason) {
-  reason = "testAdd not implemented";
-  return false;
+  vector<string> numbers = { "32890328483243289084329",
+			     "328490328432849038402384903",
+			     "3890483209483290482309840239840923",
+			     "2384903284903248320",
+			     "0",
+			     "394239423324234324"
+  };
+
+  // python:
+  // nums = [ "32890328483243289084329",
+  //     "328490328432849038402384903",
+  //     "3890483209483290482309840239840923",
+  //     "2384903284903248320",
+  //     "0",
+  //     "394239423324234324"]
+  // sum = 0
+  // for s in nums: sum += int(s)
+  // print sum
+  string res = "3890483538006512022784830158792799";
+
+  string acc('0', 48);
+  
+  for (const string & s : numbers) {
+    HackerRank::add(acc, s);
+  }
+
+  int i = 0;
+  while(i < acc.size() and acc[i] == '0') {
+    ++i;
+  }
+
+  if (res != acc.substr(i, string::npos)) {
+    reason = "add() test failed: Result: " + acc.substr(i, string::npos)
+      + ", Expected: " + res;
+    return false;
+  }
+  
+  return true;
 }
 
 bool test(string & reason) {
