@@ -42,7 +42,7 @@ bool testEratosthen(string& reason) {
   
   for (int i = 0; i < testPrimes.size(); ++i) {
     if (sieve.primes.at(i) != testPrimes.at(i)) {
-      reason = to_string(i) + " prime numbers in Eratosthen sieve: "
+      reason = to_string(i) + " prime number in Eratosthen sieve: "
 	+ to_string(sieve.primes.at(i)) + " but expected: " + to_string(testPrimes.at(i));
       return false;
     }
