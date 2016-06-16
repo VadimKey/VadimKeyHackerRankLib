@@ -24,6 +24,7 @@ public:
     build();
   }
 
+  // O(N) = 1
   IntType choose(int k, int m) {
     if (k >= p.size() or m >= p.size()) {
       throw std::invalid_argument("Too big input values");
