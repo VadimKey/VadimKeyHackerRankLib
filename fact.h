@@ -25,8 +25,8 @@ Int fact(int N) {
 //   if v can't be represented in factorial number system
 //   exception out of range will be thrown.
 // Complexity:
-// - time:
-// - space: constant
+// - time: O(1)
+// - space: constant O(1)
 uint64_t decToFns(uint64_t v) {
   uint64_t res = 0;
   int pos = 1;
