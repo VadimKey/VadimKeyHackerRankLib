@@ -1,6 +1,8 @@
 #include <iostream>
+#include <sstream>
 #include <string>
 #include <vector>
+#include <limits>
 
 #include "fact.h"
 
@@ -27,10 +29,42 @@ bool testFact(string& reason) {
   return true;
 }
 
+bool testDecToFns(string& reason) {
+  vector<uint64_t> in = { 0, 1, 2, 3, 463, 719, 720, 36288000 };
+  vector<uint64_t> out =
+    { 0, 0x10, 0x100, 0x110, 0x341010, 0x543210, 0x1000000, 0xA0000000000};
+
+  for (int i = 0; i < in.size(); ++i) {
+    uint64_t res = decToFns(in[i]);
+    if (res != out[i]) {
+      ostringstream o;
+      o << "Expected decToFns(" << dec << in[i] << ") = "
+	<< hex << out[i] << " but got: " << res;
+      reason = o.str();
+      return false;
+    }
+  }
+
+  try {
+    uint64_t max = numeric_limits<int64_t>::max();
+    uint64_t res = decToFns(max);
+    reason = "expected out_of_range exception wasn't thrown";
+    return false;
+  }
+  catch (out_of_range& ex) {
+  }
+  
+  return true;
+}
+
 int main() {
   string reason;
   if (not testFact(reason)) {
     cerr << "Test of fact() failed: " << reason << endl;
+    return 1;
+  }
+  if (not testDecToFns(reason)) {
+    cerr << "Test of decToFns() failed: " << reason << endl;
     return 1;
   }
   return 0;
