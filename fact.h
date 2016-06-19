@@ -41,6 +41,19 @@ uint64_t decToFns(uint64_t v) {
   }
   return res;
 }
- 
+
+// Returns the value of given fns digit,
+// where digit in the range from 0 to 15 (if digit out of range,
+// std::out_of_range exception will be thrown
+// The return value in the range from 0 to 0xF
+// Complexity: O(1) time/space
+uint64_t getFnsDigit(uint64_t fns, int digit) {
+  if (digit < 0 or digit > 0xF)
+    throw std::out_of_range("Digit " + std::to_string(digit) + " is out of range");
+  uint64_t res = fns >> (digit * 4);
+  return (res & 0xF);
+}
+
+  
 } // namespace HackerRank
 
