@@ -5,19 +5,30 @@
 
 namespace HackerRank {
 
-// Insertion sort (inplace)
+// Insertion sort (inplace), stable
 // Time complexity O(N^2) (worst/average)
 // https://en.wikipedia.org/wiki/Insertion_sort
 template <typename T>
 void insertsort(std::vector<T>& ar);
 
-// Quicksort (inplace)
+// Quicksort (inplace), non-stable
 // Implements Lomuto partition scheme
 // https://en.wikipedia.org/wiki/Quicksort#Lomuto_partition_scheme
 template <typename T>
 void quicksort(std::vector<T>& v, int lo, int hi);
 
-  
+
+// Counting sort, stable
+// Time complexity O(N)
+// https://en.wikipedia.org/wiki/Counting_sort
+// in - input vector,
+// maxKey - max value what could be returned by key(T), min is 0
+// key - function what return key in range 0..maxKey from T
+// out - result sorted vector
+template <typename T, typename Key>
+void countingsort(const std::vector<T>& in, int maxKey, Key key,
+		  std::vector<T>& out);
+
 // Helper functions
 namespace {
 
@@ -65,5 +76,31 @@ void quicksort(std::vector<T>& v, int lo, int hi) {
   quicksort(v, lo, p);
   quicksort(v, p + 1, hi);
 }
+
+template <typename T, typename Key>
+void countingsort(const std::vector<T>& in, int maxKey, Key key,
+		  std::vector<T>& out)
+{
+  std::vector<int> f(maxKey+1, 0);
+
+  for (auto& x : in) {
+    f[key(x)]++;
+  }
   
+  int total = 0;
+  for (int i = 0; i <= maxKey; ++i) {
+    int oldc = f[i];
+    f[i] = total;
+    total += oldc;
+  }
+
+  out.clear();
+  out.resize(in.size());
+
+  for (auto & x : in) {
+    int pos = f[key(x)]++;
+    out[pos] = x;
+  }
+}
+ 
 } // namespace HackerRank
