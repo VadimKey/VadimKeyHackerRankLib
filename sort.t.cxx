@@ -83,6 +83,95 @@ bool testCountingsort(string& reason) {
   return true;
 }
 
+bool testKth(string& reason) {
+  try {
+    vector<int> empty;
+    int x = kth(empty, 0, 0, 0);
+    reason = "Expected exception out of range wasn't thrown";
+    return false;
+  } catch(out_of_range& ex) {
+    // pass
+  }
+
+  {
+    vector<double> one = {1};
+    int x = kth(one, 0, 0, 1);
+    if (x != 1) {
+      return "kth(one, 0, 0, 1)";
+      return false;
+    }
+  }
+
+  {
+    vector<double> five = {1, 5, 4, 2, 3};
+    int x = kth(five, 3, 0, 5);
+    if (x != 3) {
+      return "kth(fice, 3, 0, 5)";
+      return false;
+    }
+  }
+
+  {
+    vector<double> dups = {1, 5, 2, 2, 2};
+    int x = kth(dups, 3, 0, 5);
+    if (x != 2) {
+      return "kth(dups, 3, 0, 5)";
+      return false;
+    }
+  }
+  
+  return true;
+}
+
+bool tesMedian(string& reason) {
+  try {
+    vector<int> empty;
+    double x = median(empty);
+    reason = "Expected exception out of range wasn't thrown";
+    return false;
+  } catch(out_of_range& ex) {
+    // pass
+  }
+
+  {
+    vector<double> one = {1};
+    double x = median(one);
+    if (x != 1) {
+      return "median(one)";
+      return false;
+    }
+  }
+
+  {
+    vector<int16_t> odd = {1, 5, 4, 2, 3};
+    double x = median(odd);
+    if (x != 3) {
+      return "median(odd)";
+      return false;
+    }
+  }
+
+  {
+    vector<int16_t> even = {1, 2, 3, 4};
+    double x = median(even);
+    if (x != 1.5) {
+      return "median(even)";
+      return false;
+    }
+  }
+  
+  {
+    vector<double> dups = {1, 5, 2, 2, 2};
+    int x = median(dups);
+    if (x != 2) {
+      return "median(dups)";
+      return false;
+    }
+  }
+  
+  return true;
+}
+
 
 int main() {
   string reason;
@@ -103,5 +192,15 @@ int main() {
     return 1;
   }
 
+  if (not testKth(reason)) {
+    cerr << "Test kth() failed: " << reason << endl;
+    return 1;
+  }
+
+  if (not tesMedian(reason)) {
+    cerr << "Test meadian() failed: " << reason << endl;
+    return 1;
+  }
+  
   return 0;
 }

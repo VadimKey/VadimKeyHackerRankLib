@@ -29,6 +29,20 @@ template <typename T, typename Key>
 void countingsort(const std::vector<T>& in, int maxKey, Key key,
 		  std::vector<T>& out);
 
+// Partially sorts vector 'v' and return kth element as if
+// vector would be fully sorted
+// inplace, time: average O(N), worst: O(n2)
+// lo - lower bound of the vector
+// hi - higher bound of the vector (not inclusive)
+template <typename T>   
+T kth(std::vector<T>& v, int k, int lo, int hi);
+
+// Calculates median of the vector v
+// Rearranges elements in v in such way that median will be in the middle of the array
+// inplace, time: average O(N), worst: O(n2)  
+template <typename T>
+double median(std::vector<T> & v);
+
 // Helper functions
 namespace {
 
@@ -76,6 +90,31 @@ void quicksort(std::vector<T>& v, int lo, int hi) {
   quicksort(v, lo, p);
   quicksort(v, p + 1, hi);
 }
+
+  
+template <typename T>   
+T kth(std::vector<T>& v, int k, int lo, int hi) {
+  int p = partition(v, lo, hi);
+  if (p == k) {
+    return v[p];
+  }
+  if (p < k) {
+    return kth(v, k, p + 1, hi);
+  }
+  return kth(v, k, lo, p);
+}
+  
+template <typename T>
+double median(std::vector<T> & v) {
+  int sz = v.size();
+  if (sz % 2 == 0) {
+    return (kth(v, sz/2-1, 0, sz) + kth(v, sz/2, 0, sz)) / 2.0;
+  }
+  else {
+    return kth(v, sz/2, 0, sz);
+  }
+}
+
 
 template <typename T, typename Key>
 void countingsort(const std::vector<T>& in, int maxKey, Key key,
